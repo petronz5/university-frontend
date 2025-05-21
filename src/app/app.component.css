@@ -1,0 +1,26 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+app-left-sidebar {
+  width: 260px;
+  min-width: 220px;
+  max-width: 320px;
+  height: 100vh;
+  position: fixed; /* Aggiunto per sicurezza */
+  left: 0;
+  top: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 32px;
+  background: #f5f7fa;
+  margin-left: 260px; /* Larghezza della sidebar espansa */
+  transition: margin-left 0.5s ease; /* Animazione coordinata */
+}
+
+.main-content.collapsed {
+  margin-left: 5rem; /* Larghezza della sidebar collassata */
+}

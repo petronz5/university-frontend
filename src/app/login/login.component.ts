@@ -19,18 +19,24 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
-    this.http.post<any>('https://localhost:7069/api/auth/login', {
-      email: this.email,
-      password: this.password
-    }).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('role', res.role);
+  this.http.post<any>('https://localhost:7069/api/auth/login', {
+    email: this.email,
+    password: this.password
+  }).subscribe({
+    next: (res) => {
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('role', res.role);
+      localStorage.setItem('email', this.email);
+      // Reindirizza alla dashboard studente se il ruolo è studente
+      if (res.role === 'Studente') {
+        this.router.navigate(['/student-dashboard']);
+      } else {
         this.router.navigate(['/welcome']);
-      },
-      error: () => {
-        this.error = 'Email o password errati';
       }
-    });
-  }
+    },
+    error: () => {
+      this.error = 'Email o password errati';
+    }
+  });
+}
 }

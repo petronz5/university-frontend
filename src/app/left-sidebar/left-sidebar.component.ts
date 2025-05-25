@@ -14,22 +14,22 @@ export class LeftSidebarComponent {
   changeIsLeftSidebarCollapsed = output<boolean>();
   items = [
     {
-      routeLink: 'welcome',
+      routeLink: '/student-dashboard',
       icon: 'fal fa-home',
-      label: 'Welcome',
+      label: 'Dashboard',
     },
     {
-      routeLink: 'products',
+      routeLink: '/products',
       icon: 'fal fa-box-open',
       label: 'Products',
     },
     {
-      routeLink: 'pages',
+      routeLink: '/pages',
       icon: 'fal fa-file',
       label: 'Pages',
     },
     {
-      routeLink: 'settings',
+      routeLink: '/settings',
       icon: 'fal fa-cog',
       label: 'Settings',
     },

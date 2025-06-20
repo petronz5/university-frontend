@@ -49,5 +49,21 @@ export class StudentService {
     return this.http.get(`${this.apiUrl}/${id}/statistics`, { headers: this.getHeaders() });
   }
 
+  getAvailableCourses(id: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}/${id}/availablecourses`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+// 2) Iscrizione a corso
+  enrollCourse(studentId: number, courseId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/${studentId}/enrollcourse/${courseId}`,
+      null,
+      { headers: this.getHeaders() }
+    );
+  }
+
   
 }

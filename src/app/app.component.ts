@@ -10,7 +10,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     RouterOutlet,
     CommonModule,
-    NgComponentOutlet,   // ⬅️ importa la direttiva
+    NgComponentOutlet,   
     SidebarComponent
   ],
   templateUrl: './app.component.html',

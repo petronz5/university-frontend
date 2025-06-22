@@ -38,16 +38,6 @@
   </ul>
 </div>
 
-<!-- Materie & CFU -->
-<div *ngIf="subjects.length" class="card subjects">
-  <h3>Materie del piano</h3>
-  <ul>
-    <li *ngFor="let s of subjects">
-      {{ s.name }} – {{ s.credits }} CFU
-    </li>
-  </ul>
-</div>
-
 
 <div *ngIf="registrations.length" class="card exams">
     <h3>Esami prenotati</h3>
@@ -71,13 +61,6 @@
   </ul>
 </div>
 
-
-<!-- 3. Avanzamento CFU -->
-<div *ngIf="stats" class="card progress">
-  <h3>Avanzamento CFU</h3>
-  <progress max="180" [value]="stats.cfu"></progress>
-  <span>{{stats.cfu}} / 180 CFU</span>
-</div>
 
 <div *ngIf="availableCourses.length" class="card available">
   <h3>Corsi disponibili</h3>

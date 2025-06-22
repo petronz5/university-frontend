@@ -20,6 +20,27 @@ export const routes: Routes = [
     canActivate: [ roleGuard ],
     data: { roles: ['Professore','Rettore'] }
   },
+  {
+  path: 'degree-subjects',
+    loadComponent: () => import('./degree-subjects/degree-subjects.component')
+                          .then(m => m.DegreeSubjectsComponent),
+    canActivate: [ roleGuard ],
+    data: { roles: ['Studente', 'Professore' , 'Rettore'] }
+  },
+  {
+  path: 'exam-booking',
+    loadComponent: () => import('./exam-booking/exam-booking.component')
+                          .then(m => m.ExamBookingComponent),
+    canActivate: [roleGuard],
+    data: { roles: ['Studente'] }
+  },
+  {
+    path: 'gradebook',
+    loadComponent: () => import('./gradebook/gradebook.component')
+                          .then(m => m.GradebookComponent),
+    canActivate: [roleGuard],
+    data: { roles: ['Studente'] }
+  },
 
   { path: '**', redirectTo: '' }
 ];

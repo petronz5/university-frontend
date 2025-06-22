@@ -8,13 +8,25 @@ export class ProfessorService {
 
   constructor(private http: HttpClient) {}
 
-  /** esami ancora da valutare del docente loggato */
-  getRegistrationsToGrade(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.base}/pending`);
+  getRegistrationsToGrade() {
+    return this.http.get<any[]>(`${this.base}/registrations/pending`);
   }
 
-  /** registra il voto definitvo */
-  setGrade(regId:number, grade:number): Observable<void> {
-    return this.http.put<void>(`${this.base}/grade/${regId}`, { grade });
+  setGrade(regId: number, grade: number) {
+    // invia il numero puro, non l’oggetto { grade }
+    return this.http.put<void>(
+      `${this.base}/registrations/${regId}/grade`,
+      grade,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
   }
+
+  getMyCourses() {
+    return this.http.get<any[]>(`${this.base}/mycourses`); 
+  }
+
+  createSession(courseId:number, session:{ examdate:string; registrationdeadline:string }) {
+    return this.http.post(`${this.base}/courses/${courseId}/examsessions`, session);
+  }
+
 }

@@ -1,0 +1,10 @@
+<li *ngFor="let c of courses">
+  {{ c.subject.name }} –
+  {{ c.subject.degreecourse?.name || '' }}
+
+  <ng-container *ngIf="role==='Professore'">
+     <input type="datetime-local" [(ngModel)]="newDate">
+     <input type="datetime-local" [(ngModel)]="newDead">
+     <button (click)="addSession(c)">➕ Sessione</button>
+  </ng-container>
+</li>

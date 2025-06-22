@@ -5,6 +5,22 @@
         <span class="icon">🏠</span>Dashboard
       </a>
     </li>
+    <li *ngIf="roleService.isStudent() || roleService.isProfessor()">
+      <a routerLink="/degree-subjects" routerLinkActive="active">
+        <span class="icon">📚</span>Materie
+      </a>
+    </li>
+    <li *ngIf="roleService.isStudent()">
+      <a routerLink="/exam-booking" routerLinkActive="active">
+        <span class="icon">🗓️</span>Prenota Esami
+      </a>
+    </li>
+    <li *ngIf="roleService.isStudent()">
+      <a routerLink="/gradebook" routerLinkActive="active">
+        <span class="icon">📒</span>Libretto Voti
+      </a>
+    </li>
+
     <!-- altre voci -->
     <li>
       <a (click)="confirmLogout()">

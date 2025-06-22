@@ -1,0 +1,16 @@
+<h2>Libretto Voti</h2>
+
+<section class="card grades">
+  <ul>
+    <li *ngFor="let g of grades">
+      {{ g.subject }}: {{ g.grade }}
+    </li>
+  </ul>
+</section>
+
+<section class="card stats" *ngIf="stats">
+  <p>Media (dal server): {{ stats.media | number:'1.2-2' }}</p>
+  <p>CFU Totali: {{ stats.cfu }}</p>
+  <p>Media Aritmetica: {{ arithmeticAvg | number:'1.2-2' }}</p>
+  <p>Media Ponderata: {{ weightedAvg | number:'1.2-2' }}</p>
+</section>

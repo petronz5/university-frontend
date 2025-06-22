@@ -1,69 +1,67 @@
+// src/app/services/student.service.ts
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class StudentService {
+  private base = 'https://localhost:7069/api/Student';
 
-  private apiUrl = 'https://localhost:7069/api/Student';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-  }
-
-    getStudentByEmail(email: string): Observable<any> {
-    // codifico email in %40 e via query string
-    const encoded = encodeURIComponent(email);
-    return this.http.get(
-      `${this.apiUrl}/byEmail?email=${encoded}`,
-      { headers: this.getHeaders() }
+  getByEmail(email: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.base}/byEmail?email=${encodeURIComponent(email)}`
     );
   }
 
-
-  getStudentById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  getCourses(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/${id}/courses`);
   }
 
-  getStudentGrades(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}/grades`, { headers: this.getHeaders() });
+  getGrades(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/${id}/grades`);
   }
 
-  getStudentCourses(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}/courses`, { headers: this.getHeaders() });
-  }
-
-  getStudentExams(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}/examregistrations`, { headers: this.getHeaders() });
-  }
-
-  getStudentStatistics(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}/statistics`, { headers: this.getHeaders() });
-  }
-
-  getAvailableCourses(id: number): Observable<any[]> {
-    return this.http.get<any[]>(
-      `${this.apiUrl}/${id}/availablecourses`,
-      { headers: this.getHeaders() }
+  getStatistics(id: number): Observable<{ media: number; cfu: number }> {
+    return this.http.get<{ media: number; cfu: number }>(
+      `${this.base}/${id}/statistics`
     );
   }
 
-// 2) Iscrizione a corso
-  enrollCourse(studentId: number, courseId: number): Observable<any> {
-    return this.http.post(
-      `${this.apiUrl}/${studentId}/enrollcourse/${courseId}`,
-      null,
-      { headers: this.getHeaders() }
-    );
-  }
+  getById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.base}/${id}`);
+    }
 
-  
+    getExamRegistrations(id: number): Observable<any[]> {
+        return this.http.get<any[]>(`${this.base}/${id}/examregistrations`);
+    }
+
+    getAvailableCourses(id:number){
+      return this.http.get<any[]>(`${this.base}/${id}/availablecourses`);
+    }
+    enrollCourse(studentId:number, courseId:number){
+      return this.http.post(`${this.base}/${studentId}/enrollcourse/${courseId}`, null);
+    }
+
+    getSubjects(id: number): Observable<any[]> {
+        return this.http.get<any[]>(`${this.base}/${id}/subjects`);
+    }
+
+    getRegistrations(id:number){
+      return this.http.get<any[]>(`${this.base}/${id}/examregistrations`);
+    }
+
+    getAvailableExams(id: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.base}/${id}/availableexams`);
+    }
+
+    registerExam(id: number, sessionId: number) {
+      return this.http.post(`${this.base}/${id}/registerexam`, sessionId);
+    }
+    
+    getDegreeCourse(id: number) {
+      return this.http.get<any>(`${this.base}/${id}/degreecourse`);
+    }
+
 }

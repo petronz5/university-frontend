@@ -1,0 +1,24 @@
+<nav class="sidebar">
+  <ul>
+    <li *ngIf="roleService.isStudent()">
+      <a routerLink="/student-dashboard" routerLinkActive="active">
+        <span class="icon">🏠</span>Dashboard
+      </a>
+    </li>
+    <!-- altre voci -->
+    <li>
+      <a (click)="confirmLogout()">
+        <span class="icon">🚪</span>Esci
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- modal -->
+<div *ngIf="showConfirm" class="modal-overlay">
+  <div class="modal-box">
+    <p>Sei sicuro di uscire?</p>
+    <button (click)="logout()">Sì</button>
+    <button (click)="cancel()">No</button>
+  </div>
+</div>

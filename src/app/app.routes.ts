@@ -1,25 +1,25 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { SettingsComponent } from './settings/settings.component';
-import { authGuard } from './guards/auth.guard';  // invece di AuthGuard
-
+import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', loadComponent: () => import('./login/login.component').then(m => m.LoginComponent) },
-  { path: 'welcome', loadComponent: () => import('./welcome/welcome.component').then(m => m.WelcomeComponent) },
-  { path: 'settings', loadComponent: () => import('./settings/settings.component').then(m => m.SettingsComponent) },
-  { 
-    path: 'student-dashboard', 
+  { path: '',         loadComponent: () => import('./login/login.component').then(m => m.LoginComponent) },
+  { path: 'register', loadComponent: () => import('./register/register.component').then(m => m.RegisterComponent) },
+
+  {
+    path: 'student-dashboard',
     loadComponent: () => import('./student-dashboard/student-dashboard.component')
-      .then(m => m.StudentDashboardComponent)
+                          .then(m => m.StudentDashboardComponent),
+    canActivate: [ roleGuard ],
+    data: { roles: ['Studente'] }
   },
   {
-    path: 'available-courses',
-    loadComponent: () =>
-      import('./available-courses/available-courses.component')
-        .then(m => m.AvailableCoursesComponent),
-    canActivate: [AuthGuard]
-  }
+    path: 'professor-dashboard',
+    loadComponent: () => import('./professor-dashboard/professor-dashboard.component')
+                          .then(m => m.ProfessorDashboardComponent),
+    canActivate: [ roleGuard ],
+    data: { roles: ['Professore','Rettore'] }
+  },
 
+  { path: '**', redirectTo: '' }
 ];

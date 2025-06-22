@@ -1,56 +1,94 @@
-<div class="dashboard-container">
-  <!-- Info Studente -->
-  <div class="student-info card" *ngIf="student">
-    <h2>Il Mio Profilo</h2>
-    <div class="info-content">
-      <p><strong>Nome:</strong> {{student.user?.firstname}} {{student.user?.lastname}}</p>
-      <p><strong>Matricola:</strong> {{student.enrollmentnumber}}</p>
-      <p><strong>Email:</strong> {{student.user?.email}}</p>
-    </div>
-  </div>
-
-  <!-- Statistiche -->
-  <div class="statistics card" *ngIf="statistics">
-    <h2>Le Mie Statistiche</h2>
-    <div class="stats-content">
-      <p><strong>Media:</strong> {{statistics.media | number:'1.2-2'}}</p>
-      <p><strong>CFU Totali:</strong> {{statistics.cfu}}</p>
-    </div>
-  </div>
-
-  <!-- Voti -->
-  <div class="grades card">
-    <h2>I Miei Voti</h2>
-    <div *ngIf="grades.length > 0" class="grades-list">
-      <div *ngFor="let grade of grades" class="grade-item">
-        <p><strong>{{grade.subject}}:</strong> {{grade.grade}}</p>
-      </div>
-    </div>
-    <p *ngIf="grades.length === 0">Nessun voto presente</p>
-  </div>
-
-  <!-- Corsi -->
-  <div class="courses card">
-    <h2>I Miei Corsi</h2>
-    <div *ngIf="courses.length > 0" class="courses-list">
-      <div *ngFor="let course of courses" class="course-item">
-        <h3>{{course.subject?.name}}</h3>
-        <p>Docente: {{course.professor?.user?.firstname}} {{course.professor?.user?.lastname}}</p>
-      </div>
-    </div>
-    <p *ngIf="courses.length === 0">Nessun corso presente</p>
-  </div>
-
-  <!-- Esami -->
-  <div class="exams card">
-    <h2>I Miei Esami</h2>
-    <div *ngIf="exams.length > 0" class="exams-list">
-      <div *ngFor="let exam of exams" class="exam-item">
-        <h3>{{exam.examsession?.course?.subject?.name}}</h3>
-        <p>Data: {{exam.examsession?.examdate | date:'dd/MM/yyyy HH:mm'}}</p>
-        <p>Stato: {{exam.status}}</p>
-      </div>
-    </div>
-    <p *ngIf="exams.length === 0">Nessun esame prenotato</p>
-  </div>
+<!-- src/app/student-dashboard/student-dashboard.component.html -->
+<div *ngIf="student" class="card profile">
+  <h2>Benvenuto, {{student.user.firstname}}!</h2>
+  <p><strong>Matricola:</strong> {{student.enrollmentnumber}}</p>
+  <p><strong>Corso di Laurea:</strong> {{student.degreeCourse?.name}}</p>
 </div>
+
+<div *ngIf="stats" class="card stats">
+  <h3>Statistiche Voti</h3>
+  <p>Media: {{stats.media | number:'1.2-2'}}</p>
+  <p>CFU Totali: {{stats.cfu}}</p>
+  <p>Media semplice: {{arithmeticAvg | number:'1.2-2'}}</p>
+  <p>Media ponderata: {{weightedAvg   | number:'1.2-2'}}</p>
+</div>
+
+<div *ngIf="stats" class="card progress">
+  <h3>Avanzamento CFU</h3>
+  <progress max="180" [value]="stats.cfu"></progress>
+  <span>{{stats.cfu}} / 180</span>
+</div>
+
+<div class="card grades">
+  <h3>I miei Voti</h3>
+  <ul>
+    <li *ngFor="let g of grades">
+      {{g.subject}}: {{g.grade}}
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="registrations.length" class="card exams">
+  <h3>Esami prenotati</h3>
+  <ul>
+    <li *ngFor="let r of registrations">
+      {{ r.examsession.course.subject.name }}
+        {{ r.examsession.examdate | date:'dd/MM/yyyy HH:mm' }}
+    </li>
+  </ul>
+</div>
+
+<!-- Materie & CFU -->
+<div *ngIf="subjects.length" class="card subjects">
+  <h3>Materie del piano</h3>
+  <ul>
+    <li *ngFor="let s of subjects">
+      {{ s.name }} – {{ s.credits }} CFU
+    </li>
+  </ul>
+</div>
+
+
+<div *ngIf="registrations.length" class="card exams">
+    <h3>Esami prenotati</h3>
+    <ul>
+        <li *ngFor="let r of registrations">
+            {{ r.examsession.course.subject.name }}  
+            ({{ r.examsession.date | date:'dd/MM/yyyy' }})
+    </li>
+    </ul>
+</div>
+
+<!-- Esami disponibili -->
+<div *ngIf="availableExams.length" class="card exams-available">
+  <h3>Esami disponibili</h3>
+  <ul>
+    <li *ngFor="let e of availableExams">
+      {{ e.course.subject.name }}
+      – {{ e.examdate | date:'dd/MM/yyyy HH:mm' }}
+      <button (click)="bookExam(e.examsessionid)">Prenota</button>
+    </li>
+  </ul>
+</div>
+
+
+<!-- 3. Avanzamento CFU -->
+<div *ngIf="stats" class="card progress">
+  <h3>Avanzamento CFU</h3>
+  <progress max="180" [value]="stats.cfu"></progress>
+  <span>{{stats.cfu}} / 180 CFU</span>
+</div>
+
+<div *ngIf="availableCourses.length" class="card available">
+  <h3>Corsi disponibili</h3>
+  <ul>
+    <li *ngFor="let c of availableCourses">
+      {{c.subject}} (Sem. {{c.semester}})
+      <button (click)="enroll(c.courseid)">Iscriviti</button>
+    </li>
+  </ul>
+</div>
+
+
+
+

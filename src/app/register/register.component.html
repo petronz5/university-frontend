@@ -1,0 +1,31 @@
+<form class="form" (ngSubmit)="onSubmit()" #regForm="ngForm">
+  <h2>Registrazione Studente</h2>
+  <div *ngIf="error" style="color:red">{{ error }}</div>
+  <div *ngIf="success" style="color:green">{{ success }}</div>
+
+  <label>Nome</label>
+  <input name="firstName" [(ngModel)]="firstName" required />
+
+  <label>Cognome</label>
+  <input name="lastName" [(ngModel)]="lastName" required />
+
+  <label>Email</label>
+  <input type="email" name="email" [(ngModel)]="email" required />
+
+  <label>Password</label>
+  <input type="password" name="password" [(ngModel)]="password" required />
+
+  <label>Corso di Laurea</label>
+  <select name="degreeCourseId" [(ngModel)]="degreeCourseId">
+    <option *ngFor="let dc of degreeCourses" [value]="dc.degreecourseid">
+      {{ dc.name }}
+    </option>
+  </select>
+
+  <button type="submit">Registrati</button>
+
+  <p>
+    Hai già un account?
+    <a [routerLink]="['/']" class="span">Login</a>
+  </p>
+</form>

@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
-import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgComponentOutlet } from '@angular/common';   // ⬅️
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
   standalone: true,
-  imports: [RouterOutlet , LeftSidebarComponent, CommonModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    NgComponentOutlet,   // ⬅️ importa la direttiva
+    SidebarComponent
+  ],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  isLeftSidebarCollapsed = false;
-  title = 'university-frontend';
+  sidebar = SidebarComponent;        // la proprietà usata nel template
   currentUrl = '';
-  
 
   constructor(private router: Router) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.currentUrl = event.urlAfterRedirects;
-    });
+    router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: any) => (this.currentUrl = e.urlAfterRedirects));
   }
 
   isLoginPage(): boolean {

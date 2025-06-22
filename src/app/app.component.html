@@ -1,15 +1,8 @@
-<ng-container *ngIf="!isLoginPage(); else loginTemplate">
-  <div class="layout">
-    <app-left-sidebar 
-        [isLeftSidebarCollapsed]="isLeftSidebarCollapsed"
-        (changeIsLeftSidebarCollapsed)="isLeftSidebarCollapsed = $event">
-    </app-left-sidebar>
-    <div class="main-content" [class.collapsed]="isLeftSidebarCollapsed">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</ng-container>
+<!-- app.component.html -->
+<div class="layout">
+  <ng-container *ngIf="!isLoginPage()" [ngComponentOutlet]="sidebar"></ng-container>
 
-<ng-template #loginTemplate>
-  <router-outlet></router-outlet>
-</ng-template>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

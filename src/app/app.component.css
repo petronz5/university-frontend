@@ -1,26 +1,31 @@
+/* app.component.css */
 .layout {
   display: flex;
-  min-height: 100vh;
-}
-
-app-left-sidebar {
-  width: 260px;
-  min-width: 220px;
-  max-width: 320px;
   height: 100vh;
-  position: fixed; /* Aggiunto per sicurezza */
-  left: 0;
-  top: 0;
+  overflow: hidden;
 }
 
-.main-content {
-  flex: 1;
-  padding: 32px;
-  background: #f5f7fa;
-  margin-left: 260px; 
-  transition: margin-left 0.5s ease; 
+.sidebar {
+  width: 220px;        /* fissa la larghezza della sidebar */
+  flex-shrink: 0;      /* non si contrae */
 }
 
-.main-content.collapsed {
-  margin-left: 5rem; /* Larghezza della sidebar collassata */
+.content {
+  flex: 1;             /* occupa tutto lo spazio rimanente */
+  overflow-y: auto;    /* scroll se serve */
+  padding: 1rem;
+}
+
+/* media query per mobile */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    order: 1;
+  }
+  .content {
+    order: 2;
+  }
 }

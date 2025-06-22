@@ -1,0 +1,21 @@
+<h2>Esami da correggere</h2>
+
+<table *ngIf="pending.length">
+  <thead>
+    <tr><th>Studente</th><th>Corso</th><th>Voto</th><th></th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of pending">
+      <td>{{ r.student.user.firstname }} {{ r.student.user.lastname }}</td>
+      <td>{{ r.examsession.course.subject.name }}</td>
+      <td>
+        <input type="number" min="18" max="30" [(ngModel)]="r.tempGrade">
+      </td>
+      <td>
+        <button (click)="save(r)">Salva</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="!pending.length">Nessun esame in attesa di correzione.</p>

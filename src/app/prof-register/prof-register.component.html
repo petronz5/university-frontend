@@ -1,0 +1,24 @@
+<h2>I miei corsi</h2>
+
+<ul>
+  <li *ngFor="let c of courses">
+    <button class="link" (click)="loadGrades(c.courseid)">
+      {{ c.subject.name }} – {{ c.academicyear }}
+    </button>
+  </li>
+</ul>
+
+<table *ngIf="rows.length" class="table">
+  <thead>
+    <tr>
+      <th>Studente</th><th>Voto</th><th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of rows">
+      <td>{{ r.firstname }}&nbsp;{{ r.lastname }}</td>
+      <td>{{ r.grade }}</td>
+      <td>{{ r.examdate | date:'dd/MM/yyyy' }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -15,6 +15,13 @@
         <span class="icon">🗓️</span>Prenota Esami
       </a>
     </li>
+
+    <li *ngIf="roleService.isProfessor()">
+      <a routerLink="/prof-register" routerLinkActive="active">
+        <span class="icon">📑</span>Registro
+      </a>
+    </li>
+
     <li *ngIf="roleService.isStudent()">
       <a routerLink="/gradebook" routerLinkActive="active">
         <span class="icon">📒</span>Libretto Voti

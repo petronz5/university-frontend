@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
 import { StudentService }    from '../services/student.service';
 import { map }               from 'rxjs/operators';
+import { GradeStatsComponent } from '../grade-stats/grade-stats.component';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, GradeStatsComponent],
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css']
 })
@@ -29,9 +30,6 @@ export class StudentDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const id = +localStorage.getItem('studentId')!;
-
-    // → corsi disponibili
-    this.svc.getAvailableCourses(id).subscribe(c => this.availableCourses = c);
 
     // → esami prenotati imminenti
     this.svc.getRegistrations(id).pipe(
@@ -80,13 +78,6 @@ export class StudentDashboardComponent implements OnInit {
     });
   }
 
-  // Iscrizione corso (esistente)
-  enroll(courseId:number): void {
-    const id = +localStorage.getItem('studentId')!;
-    this.svc.enrollCourse(id, courseId)
-      .subscribe(() => this.availableCourses =
-        this.availableCourses.filter(c => c.courseid !== courseId));
-  }
 
   bookExam(sessionId: number): void {
     const id = +localStorage.getItem('studentId')!;

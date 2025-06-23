@@ -1,0 +1,47 @@
+<!-- Sessioni DISPONIBILI -->
+<div class="card" *ngIf="availableExams.length">
+  <h2>Esami disponibili</h2>
+  <table>
+    <thead>
+      <tr><th>Materia</th><th>Data</th><th>Scadenza</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of availableExams">
+        <td>{{ e.course.subject.name }}</td>
+        <td>{{ e.examdate            | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ e.registrationdeadline| date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>
+          <button (click)="bookExam(e.examsessionid)">Prenota</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Sessioni PRENOTATE -->
+<div class="card" *ngIf="registrations.length">
+  <h2>Esami prenotati</h2>
+  <table>
+    <thead>
+      <tr><th>Materia</th><th>Data</th><th>Stato</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of registrations">
+        <td>{{ r.examsession.course.subject.name }}</td>
+        <td>{{ r.examsession.examdate | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ r.status }}</td>
+        <td>
+          <button *ngIf="isBeforeDeadline(r.examsession.registrationdeadline)"
+                  (click)="cancelExam(r.examsession.examsessionid)">
+            Disdici
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Nessun dato -->
+<p *ngIf="!availableExams.length && !registrations.length">
+  Nessuna sessione d’esame da mostrare.
+</p>

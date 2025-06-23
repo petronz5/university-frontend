@@ -1,10 +1,28 @@
-<li *ngFor="let c of courses">
-  {{ c.subject.name }} –
-  {{ c.subject.degreecourse?.name || '' }}
+<!-- src/app/degree-subjects/degree-subjects.component.html -->
 
-  <ng-container *ngIf="role==='Professore'">
-     <input type="datetime-local" [(ngModel)]="newDate">
-     <input type="datetime-local" [(ngModel)]="newDead">
-     <button (click)="addSession(c)">➕ Sessione</button>
-  </ng-container>
-</li>
+<!-- Studente: elenco materie -->
+<div *ngIf="role === 'Studente'">
+  <h2>Materie del tuo corso di laurea</h2>
+  <ul>
+    <li *ngFor="let s of subjects">
+      {{ s.name }} – {{ s.credits }} CFU
+    </li>
+  </ul>
+</div>
+
+<!-- Professore: elenco corsi e form per creare sessioni -->
+<div *ngIf="role === 'Professore'">
+  <h2>I tuoi corsi</h2>
+  <ul>
+    <li *ngFor="let c of courses">
+      <strong>{{ c.subject.name }}</strong>
+      (Anno accademico: {{ c.academicyear }}, Sem.: {{ c.semester }})
+      <div class="session-form">
+        <input placeholder="Nome sessione"                [(ngModel)]="newName">
+        <input type="datetime-local"                       [(ngModel)]="newDate">
+        <input type="datetime-local"                       [(ngModel)]="newDead">
+        <button (click)="addSession(c)">➕ Crea sessione</button>
+      </div>
+    </li>
+  </ul>
+</div>

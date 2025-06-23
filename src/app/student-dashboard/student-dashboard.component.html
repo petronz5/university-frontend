@@ -7,6 +7,9 @@
 
 <div *ngIf="stats" class="card stats">
   <h3>Statistiche Voti</h3>
+  <!-- Andamento medie per materia -->
+  <app-grade-stats></app-grade-stats>
+
   <p>Media: {{stats.media | number:'1.2-2'}}</p>
   <p>CFU Totali: {{stats.cfu}}</p>
   <p>Media semplice: {{arithmeticAvg | number:'1.2-2'}}</p>
@@ -39,16 +42,6 @@
 </div>
 
 
-<div *ngIf="registrations.length" class="card exams">
-    <h3>Esami prenotati</h3>
-    <ul>
-        <li *ngFor="let r of registrations">
-            {{ r.examsession.course.subject.name }}  
-            ({{ r.examsession.date | date:'dd/MM/yyyy' }})
-    </li>
-    </ul>
-</div>
-
 <!-- Esami disponibili -->
 <div *ngIf="availableExams.length" class="card exams-available">
   <h3>Esami disponibili</h3>
@@ -62,15 +55,6 @@
 </div>
 
 
-<div *ngIf="availableCourses.length" class="card available">
-  <h3>Corsi disponibili</h3>
-  <ul>
-    <li *ngFor="let c of availableCourses">
-      {{c.subject}} (Sem. {{c.semester}})
-      <button (click)="enroll(c.courseid)">Iscriviti</button>
-    </li>
-  </ul>
-</div>
 
 
 

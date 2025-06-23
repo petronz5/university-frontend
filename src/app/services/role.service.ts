@@ -5,10 +5,10 @@ import { isPlatformBrowser } from '@angular/common';
 export class RoleService {
   private platformId = inject(PLATFORM_ID);
 
-  getRole(): string | null {
+  getRole(): string {
     return isPlatformBrowser(this.platformId)
-      ? localStorage.getItem('role')
-      : null;
+      ? localStorage.getItem('role') ?? ''
+      : '';
   }
 
   isStudent(): boolean {

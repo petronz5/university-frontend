@@ -41,6 +41,20 @@ export const routes: Routes = [
     canActivate: [roleGuard],
     data: { roles: ['Studente'] }
   },
+  {
+    path: 'prof-register',
+    loadComponent: () => import('./prof-register/prof-register.component')
+                        .then(m => m.ProfRegisterComponent),
+    canActivate: [roleGuard],
+    data: { roles: ['Professore','Rettore'] }
+  },
+  {
+    path:'exam-calendar',
+    loadComponent:() => import('./exam-calendar/exam-calendar.component')
+                        .then(m=>m.ExamCalendarComponent),
+    canActivate:[roleGuard],
+    data:{ roles:['Studente'] }
+  },
 
   { path: '**', redirectTo: '' }
 ];

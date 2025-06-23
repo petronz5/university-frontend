@@ -37,13 +37,6 @@ export class StudentService {
         return this.http.get<any[]>(`${this.base}/${id}/examregistrations`);
     }
 
-    getAvailableCourses(id:number){
-      return this.http.get<any[]>(`${this.base}/${id}/availablecourses`);
-    }
-    enrollCourse(studentId:number, courseId:number){
-      return this.http.post(`${this.base}/${studentId}/enrollcourse/${courseId}`, null);
-    }
-
     getSubjects(id: number): Observable<any[]> {
         return this.http.get<any[]>(`${this.base}/${id}/subjects`);
     }
@@ -63,5 +56,13 @@ export class StudentService {
     getDegreeCourse(id: number) {
       return this.http.get<any>(`${this.base}/${id}/degreecourse`);
     }
+
+    getGradeAnalytics(id:number){
+      return this.http.get<any[]>(`/api/student/${id}/grade-analytics`);
+    }
+
+    unregisterExam(id: number, sesId: number) {
+    return this.http.delete(`${this.base}/${id}/unregisterexam/${sesId}`);
+  }
 
 }
